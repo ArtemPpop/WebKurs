@@ -1,4 +1,15 @@
 import { Link } from 'react-router-dom'
+import React, { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import '../styles.css';
+
+
+
+
 export default function Home() {
 const categories = [
 { id: 1, title: 'Ножи', img: 'https://picsum.photos/seed/cat1/400/200' },
@@ -19,15 +30,29 @@ return (
 
 
 <section className="max-w-7xl mx-auto px-4 py-12">
-<h2 className="text-2xl font-semibold mb-6">Популярные категории</h2>
+    <h2 className="text-2xl font-semibold mb-6">Популярные категории</h2>
 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-{categories.map(c => (
-<div key={c.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md">
-<img src={c.img} alt={c.title} className="w-full h-40 object-cover" />
-<div className="p-4 font-medium text-center">{c.title}</div>
-</div>
+    {categories.map(c => (
+      <div key={c.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md">
+            <img src={c.img} alt={c.title} className="w-full h-40 object-cover" />
+            <div className="p-4 font-medium text-center">{c.title}</div>
+      </div>
 ))}
 </div>
+</section>
+
+<section>
+ <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+        <SwiperSlide>Slide 9</SwiperSlide>
+      </Swiper>
 </section>
 </main>
 )

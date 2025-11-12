@@ -3,120 +3,113 @@ const express = require('express')
 const pool = require("./indexdb.js")
 const PORT = process.env.PORT || 5000
 const app = express()
-const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
-const { where } = require("sequelize")
-const corsOption = {
-    origin:"http://localhost:5173"
-}
-app.use(bodyParser.json());
-app.use(cors(corsOption))
-app.listen(PORT, () =>{
-    console.log(`server starting ${PORT}`)
-})
 
-app.get("/coffe_1", async(req,res) =>{
-    try{
-        const addTodor = await pool.query("SELECT * FROM coffedb.coffe_1")
-        res.json(addTodor.rows)
-    }
-    catch(err){
-        console.error(err.message)
-    }
-})
-
-app.get("/coffe_2", async(req,res) =>{
-    try{
-        const addTodor = await pool.query("SELECT * FROM coffedb.coffe_2")
-        res.json(addTodor.rows)
-    }
-    catch(err){
-        console.error(err.message)
-    }
-})
-
-
-app.get("/coffe_3", async(req,res) =>{
-    try{
-        const addTodor = await pool.query("SELECT * FROM coffedb.coffe_3")
-        res.json(addTodor.rows)
-    }
-    catch(err){
-        console.error(err.message)
-    }
-})
-
-app.put('/postgres/user/:user_id', async (req, res) => {
-
-
-const { name_user, age_user, mail_user, nick_user,number,password } = req.body
-try {
-const result = await pool.query(
-'UPDATE user SET name_user = $1, age_user = $2, mail_user = $3, nick_user = $4 , number = $5 , password = $6 WHERE user_id = $7 RETURNING *',
-[ name_user, age_user, mail_user, nick_user,number,password, req.params.id]
-)
-if (result.rows.length === 0) {
-return res.status(404).json({ error: 'Product not found' })
-}
-
-const user = result.rows[0]
-const userResult = await pool.query('SELECT name FROM users WHERE user_id = $1', [users.id])
-res. json({
-...user,
-user: { id: users.id, name: userResult.rows[0].name }
-})
-} catch (error) {
-res.status(500).json({ error: 'Server error' })
-}
-})
-
-
-// app.delete('/postgres/coffe_1', async (req, res) => {
-// try {
-//     await pool.query('DELETE FROM users WHERE idcoffe1 = $1', [req.params.id])
-//     res.json({ success: true })
-// } catch (error){
-// res. status(500).json({ error: 'Server error' })
-// }
-// })
-
-
-
-
-app.delete('/coffe_1/:idcoffe1', async (req, res) => {
-  try {
-    const { idcoffe1 } = req.params;
-    const result = await pool.query(
-      'DELETE FROM coffedb.coffe_1 WHERE idcoffe1 = $1',
-      [idcoffe1]
-    );
-    if (result.rowCount > 0) {
-      res.status(204).send(); // Успешное удаление
-    } else {
-      res.status(404).json({ message: 'Запись не найдена' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-const handleDelete = async (id) => {
-await deleteCoffe(id)
-setCoffe(coffe_1.filter(p => p.id !== id))
-}
-
-app.get('/postgres/user', async (req, res) => {
-try {
-const result = await pool.query(`
-SELECT p.*, m.name as name_user FROM user p JOIN users m ON p.name_id = m.id`)
-const products = result.rows.map(p => ({
-...p,
-manufacturer: { id: p.id, name: p.name_user }
+// Middleware
+app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:5173"
 }))
-res. json(users)
-}catch (error) {
-res.status(500).json({ error: 'Server error' })
-}
+
+// Получить все ножи
+app.get("/knives", async (req, res) => {
+    try {
+        const result = await pool.query("SELECT * FROM knives ORDER BY id ASC")
+        res.json(result.rows)
+    } catch (error) {
+        console.error("Ошибка при получении ножей:", error.message)
+        res.status(500).json({ error: "Ошибка сервера", details: error.message })
+    }
 })
 
+// Получить нож по ID
+app.get("/knives/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query("SELECT * FROM knives WHERE id = $1", [id])
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Нож не найден" })
+        }
+        
+        res.json(result.rows[0])
+    } catch (error) {
+        console.error("Ошибка при получении ножа:", error.message)
+        res.status(500).json({ error: "Ошибка сервера", details: error.message })
+    }
+})
+
+// Добавить новый нож
+app.post("/knives", async (req, res) => {
+    try {
+        const { name, description, price, rating, image_url } = req.body
+        const result = await pool.query(
+            "INSERT INTO knives (name, description, price, rating, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [name, description, price, rating, image_url]
+        )
+        res.status(201).json(result.rows[0])
+    } catch (error) {
+        console.error("Ошибка при добавлении ножа:", error.message)
+        res.status(500).json({ error: "Ошибка сервера", details: error.message })
+    }
+})
+
+// Обновить нож
+app.put("/knives/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const { name, description, price, rating, image_url } = req.body
+        const result = await pool.query(
+            "UPDATE knives SET name = $1, description = $2, price = $3, rating = $4, image_url = $5 WHERE id = $6 RETURNING *",
+            [name, description, price, rating, image_url, id]
+        )
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Нож не найден" })
+        }
+        
+        res.json(result.rows[0])
+    } catch (error) {
+        console.error("Ошибка при обновлении ножа:", error.message)
+        res.status(500).json({ error: "Ошибка сервера", details: error.message })
+    }
+})
+
+// Удалить нож
+app.delete("/knives/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query(
+            "DELETE FROM knives WHERE id = $1 RETURNING *",
+            [id]
+        )
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Нож не найден" })
+        }
+        
+        res.status(204).send()
+    } catch (error) {
+        console.error("Ошибка при удалении ножа:", error.message)
+        res.status(500).json({ error: "Ошибка сервера", details: error.message })
+    }
+})
+app.get("/test-db", async (req, res) => {
+    try {
+        const result = await pool.query("SELECT NOW() as current_time")
+        res.json({ 
+            message: "Подключение к БД успешно",
+            current_time: result.rows[0].current_time
+        })
+    } catch (error) {
+        console.error("Ошибка подключения к БД:", error.message)
+        res.status(500).json({ 
+            error: "Ошибка подключения к БД", 
+            details: error.message 
+        })
+    }
+})
+
+// Server start
+app.listen(PORT, () => {
+    console.log(`Server starting on port ${PORT}`)
+})

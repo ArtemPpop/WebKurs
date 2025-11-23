@@ -8,14 +8,15 @@ import Product from './pages/Product.jsx'
 import Account from './pages/Account.jsx'
 
 
+
 export default function App() {
 return (
 <Router>
 <Header />
 <Routes>
 <Route path="/" element={<Home />} />
-<Route path="/catalog" element={<Catalog />} />
-<Route path="/product/:id" element={<Product />} />
+<Route path="/catalog/:category" element={<Catalog />} />
+<Route path="/product/:category/:id" element={<Product />} />
 <Route path="/account" element={<Account />} />
 </Routes>
 <Footer />

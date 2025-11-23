@@ -49,7 +49,7 @@ export default function Header() {
   </div>
 
   {/* Остальные пункты меню без подменю */}
-  <Link to="/catalog" className="hover:text-amber-600">Клинковое оружие</Link>
+  <Link to="/catalog/knives" className="hover:text-amber-600">Клинковое оружие</Link>
   <Link to="/catalog/souvenirs" className="hover:text-amber-600">Сувенирные изделия</Link>
   <Link to="/catalog/flashlights" className="hover:text-amber-600">Фонари ARMYTEK</Link>
   <Link to="/catalog/accessories" className="hover:text-amber-600">Сопутствующие товары</Link>

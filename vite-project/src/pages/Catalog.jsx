@@ -1,60 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import ProductCard from '../component/ProductCard.jsx';
 
 export default function Catalog() {
-  const [knives, setKnives] = useState([]);
+  const { category } = useParams(); // <-- получаем категорию
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchKnives();
-  }, []);
+  // Человеческое название (для заголовка)
+  const titles = {
+    knives: "Клинковое оружие",
+    souvenirs: "Сувенирные изделия",
+    flashlights: "Фонари ARMYTEK",
+    accessories: "Сопутствующие товары"
+  };
 
-  const fetchKnives = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [category]);
+
+  const fetchItems = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/knives');
-      
+
+      const response = await fetch(`http://localhost:5000/${category}`);
+
       if (!response.ok) {
-        throw new Error('Ошибка при загрузке данных');
+        throw new Error("Ошибка загрузки данных");
       }
-      
+
       const data = await response.json();
-      setKnives(data);
+      setItems(data);
     } catch (err) {
       setError(err.message);
-      console.error('Ошибка:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center">Загрузка каталога...</div>
-      </main>
-    );
-  }
-
-  if (error) {
-    return (
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center text-red-500">Ошибка загрузки: {error}</div>
-      </main>
-    );
-  }
+  if (loading) return <div className="p-10 text-center">Загрузка...</div>;
+  if (error) return <div className="p-10 text-red-500 text-center">{error}</div>;
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-semibold mb-6">Каталог ножей</h1>
-      
-      {knives.length === 0 ? (
-        <div className="text-center text-gray-500">Ножи не найдены</div>
+      <h1 className="text-2xl font-semibold mb-6">
+        {titles[category] || "Каталог"}
+      </h1>
+
+      {items.length === 0 ? (
+        <div className="text-center text-gray-500">Товары не найдены</div>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {knives.map(knife => (
-            <ProductCard key={knife.id} product={knife} />
+          {items.map(item => (
+            <ProductCard 
+              key={item.id} 
+              product={{ ...item, category }} // ВАЖНО!
+            />
           ))}
         </div>
       )}

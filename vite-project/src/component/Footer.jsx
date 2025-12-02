@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t bg-white mt-12" id="about">
+    <footer className="border-t bg-[#141414] mt-12" id="about">
       <div className="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-600">
         <div className="mb-6 ">
             <div className="flex items-center">
@@ -9,7 +9,7 @@ export default function Footer() {
                  </h1>
             </div>  
           
-          <p className="mb-4">
+          <p className="mb-4 text-white">
             Наш интернет-магазин "ЗЛАТМАКС" предлагает Вам ножи очень высокого качества
             из города оружейников - Златоуста. Златоустовские ножи известны и популярны 
             среди потребителей как на российском рынке, так и за рубежом: ножи охотничьи,
@@ -22,50 +22,50 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6 text-white">
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">ИНФОРМАЦИЯ</h3>
+            <h3 className="font-semibold ">ИНФОРМАЦИЯ</h3>
             <div className="flex flex-col space-y-2">
-              <a href="#" className="hover:text-gray-900">Златоустовские ножи в Москве и Московской области</a>
-              <a href="#" className="hover:text-gray-900">Ножевые стали</a>
-              <a href="#" className="hover:text-gray-900">О нас</a>
-              <a href="#" className="hover:text-gray-900">Условия оплаты и доставки</a>
-              <a href="#" className="hover:text-gray-900">Политика конфиденциальности</a>
+              <a href="#" >Златоустовские ножи в Москве и Московской области</a>
+              <a href="#" >Ножевые стали</a>
+              <a href="#" >О нас</a>
+              <a href="#" >Условия оплаты и доставки</a>
+              <a href="#" >Политика конфиденциальности</a>
+            </div>
+          </div>
+
+          <div className="text-white">
+            <h3 className="font-semibold  mb-3">СЛУЖБА ПОДДЕРЖКИ</h3>
+            <div className="flex flex-col space-y-2">
+              <a href="#" className="">Контактная информация</a>
+              <a href="#" className="">Возврат товара</a>
+              <a href="#" >Карта сайта</a>
+            </div>
+          </div>
+
+          <div className="text-white">
+            <h3 className="font-semibold ">ДОПОЛНИТЕЛЬНО</h3>
+            <div className="flex flex-col space-y-2">
+              <a href="#" className="">Подарочные сертификаты</a>
+              <a href="#" className="">Партнеры</a>
+              <a href="#" className="">Товары со скидкой</a>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">СЛУЖБА ПОДДЕРЖКИ</h3>
+            <h3 className="font-semibold">ЛИЧНЫЙ КАБИНЕТ</h3>
             <div className="flex flex-col space-y-2">
-              <a href="#" className="hover:text-gray-900">Контактная информация</a>
-              <a href="#" className="hover:text-gray-900">Возврат товара</a>
-              <a href="#" className="hover:text-gray-900">Карта сайта</a>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-3">ДОПОЛНИТЕЛЬНО</h3>
-            <div className="flex flex-col space-y-2">
-              <a href="#" className="hover:text-gray-900">Подарочные сертификаты</a>
-              <a href="#" className="hover:text-gray-900">Партнеры</a>
-              <a href="#" className="hover:text-gray-900">Товары со скидкой</a>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-3">ЛИЧНЫЙ КАБИНЕТ</h3>
-            <div className="flex flex-col space-y-2">
-              <a href="#" className="hover:text-gray-900">Личный кабинет</a>
-              <a href="#" className="hover:text-gray-900">История заказов</a>
-              <a href="#" className="hover:text-gray-900">Мои закладки</a>
-              <a href="#" className="hover:text-gray-900">Рассылка новостей</a>
+              <a href="#" >Личный кабинет</a>
+              <a href="#" className="">История заказов</a>
+              <a href="#" className="">Мои закладки</a>
+              <a href="#" className="">Рассылка новостей</a>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t pt-6 text-white">
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">КОНТАКТЫ</h3>
+            <h3 className="font-semibold ">КОНТАКТЫ</h3>
             <div className="space-y-2">
               <div>8 800 777-49-87</div>
               <div>Пн-Пт 7:00 - 16:00 (МСК)</div>
@@ -75,17 +75,17 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">ПОЛЕЗНЫЕ ССЫЛКИ</h3>
-            <a href="#" className="hover:text-gray-900">Способы оплаты и доставки</a>
+            <h3 className="font-semibold ">ПОЛЕЗНЫЕ ССЫЛКИ</h3>
+            <a href="#" >Способы оплаты и доставки</a>
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">НАША ГАРАНТИЯ</h3>
+            <h3 className="font-semibold ">НАША ГАРАНТИЯ</h3>
             <p>Не довольны своей покупкой? Вы можете вернуть ее в течение 30 дней с даты получения, согласно нашим правилам</p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">НОВОСТНАЯ РАССЫЛКА</h3>
+            <h3 className="font-semibold ">НОВОСТНАЯ РАССЫЛКА</h3>
             <div className="space-y-2">
               <p>Подпишитесь прямо сейчас!</p>
               <div className="flex">

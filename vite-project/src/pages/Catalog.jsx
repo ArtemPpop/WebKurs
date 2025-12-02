@@ -55,7 +55,7 @@ export default function Catalog() {
           {items.map(item => (
             <ProductCard 
               key={item.id} 
-              product={{ ...item, category }} // ВАЖНО!
+              product={{ ...item, category }} 
             />
           ))}
         </div>

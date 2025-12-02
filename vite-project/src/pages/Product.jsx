@@ -2,21 +2,21 @@ import { useParams } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 
 export default function Product() {
-  const { id } = useParams()
+  const { id, category } = useParams()   // <── ВАЖНО!
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (id) {
+    if (id && category) {
       fetchProduct()
     }
-  }, [id])
+  }, [id, category])
 
   const fetchProduct = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`http://localhost:5000/knives/${id}`)
+      const response = await fetch(`http://localhost:5000/${category}/${id}`)
       
       if (!response.ok) {
         if (response.status === 404) {
@@ -35,32 +35,12 @@ export default function Product() {
     }
   }
 
-  if (loading) {
-    return (
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="text-center">Загрузка товара...</div>
-      </main>
-    )
-  }
-
-  if (error) {
-    return (
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="text-center text-red-500">Ошибка: {error}</div>
-      </main>
-    )
-  }
-
-  if (!product) {
-    return (
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="text-center text-gray-500">Товар не найден</div>
-      </main>
-    )
-  }
+  if (loading) return <main className="max-w-5xl mx-auto px-4 py-8"><div className="text-center">Загрузка...</div></main>
+  if (error) return <main className="max-w-5xl mx-auto px-4 py-8"><div className="text-center text-red-500">{error}</div></main>
+  if (!product) return <main className="max-w-5xl mx-auto px-4 py-8"><div className="text-center">Товар не найден</div></main>
 
   return (
-  <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-6xl mx-auto px-4 py-8">
 
     {/* ВЕРХНИЙ БЛОК — ФОТО + ИНФОРМАЦИЯ */}
     <div className="flex flex-col lg:flex-row gap-8">
@@ -162,7 +142,8 @@ export default function Product() {
             className="border rounded p-3 hover:shadow-lg cursor-pointer transition"
           >
             <img
-              src={product.image_url}
+             src={`http://localhost:5000/${product.image_url}`}
+             alt={product.name}
               className="w-full h-40 object-cover rounded mb-3"
             />
             <div className="font-medium">{product.name}</div>
@@ -174,7 +155,6 @@ export default function Product() {
       </div>
     </div>
 
-  </main>
-);
-  
+  </main> 
+  )
 }

@@ -10,9 +10,9 @@ export default function Header() {
                 <div className='flex gap-6'>
       
                     <a href="#about" className="hover:text-amber-600">О нас</a>
-                    <a href="#payment" className="hover:text-amber-600">Оплата и доставка</a>
-                    <a href="#news" className="hover:text-amber-600">Новости</a>
-                    <a href="#contacts" className="hover:text-amber-600">Контакты</a>
+                    <a href="#about" className="hover:text-amber-600">Оплата и доставка</a>
+                    <a href="#about" className="hover:text-amber-600">Новости</a>
+                    <a href="#about" className="hover:text-amber-600">Контакты</a>
                 </div>
 
                 <div className="flex gap-6">
@@ -36,9 +36,7 @@ export default function Header() {
      <nav className="flex gap-6 text-sm items-center">
   {/*  подменю  аталог */}
   <div className="relative group">
-    <Link to="/catalog"className="hover:text-amber-600">
       Каталог
-    </Link>
      {/* Выпадающее меню  */}
     <div className="absolute left-0 top-full mt-1 w-48 bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
       <Link to="/catalog/knives" className="block px-4 py-2 hover:bg-gray-100">Клинковое оружие</Link>
